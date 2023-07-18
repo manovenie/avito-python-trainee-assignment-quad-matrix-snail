@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "python-trainee-assignment-matrix"
+version = "0.1.0"
+description = ""
+authors = ["manovenie <manilovx@gmail.com>"]
+readme = "README.md"
+packages = [{include = "python_trainee_assignment_matrix"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+aiohttp = "^3.8.4"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+flake8 = "^6.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
