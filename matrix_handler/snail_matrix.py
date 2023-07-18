@@ -68,11 +68,11 @@ def traverse_matrix(quad_matrix: list[list[int]]) -> list[int]:
         # check not to go beyond x,y boundaries and not to visited cells
         next_x_pos = x + x_dir
         next_y_pos = y + y_dir
-        if (0 <= next_x_pos < size) and (0 <= next_y_pos < size) and (quad_matrix[next_y_pos][next_x_pos] is not None):
+        if (0 <= next_x_pos < size) and (0 <= next_y_pos < size) and (quad_matrix[next_y_pos][next_x_pos]):
             x = next_x_pos
             y = next_y_pos
             result.append(quad_matrix[y][x])
-            quad_matrix[y][x] = None
+            quad_matrix[y][x] = False
             move_counter += 1
         else:
             x_dir, y_dir = change_direction(x_dir, y_dir)
