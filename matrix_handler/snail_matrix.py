@@ -28,16 +28,11 @@ def change_direction(x_dir, y_dir):
     return (x_dir, y_dir)
 
 
-# TO-DO: refactor
 def is_quadratic(matrix_list):
-    first_row_len = len(matrix_list[0])
-    row_count = 0
+    matrix_len = len(matrix_list)
     for row in matrix_list:
-        if len(row) != first_row_len:
+        if len(row) != matrix_len:
             return False
-        row_count += 1
-    if row_count != first_row_len:
-        return False
     return True
 
 
