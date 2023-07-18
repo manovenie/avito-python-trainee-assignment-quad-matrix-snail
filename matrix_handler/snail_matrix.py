@@ -3,9 +3,18 @@ import asyncio
 
 
 async def get_text_matrix(url: str) -> str:
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
-            return await response.text()
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                return await response.text()
+    except aiohttp.ClientError as e:
+        print(f"ClientError: {e}")
+    except asyncio.TimeoutError:
+        print("Connection Timeout")
+    except ConnectionRefusedError as e:
+        print(f"ConnectionRefusedError: {e}")
+    except Exception as e:
+        print(f"Error occurred: {e}")
 
 
 def change_direction(x_dir: int, y_dir: int) -> tuple[int, int]:
@@ -68,7 +77,8 @@ def traverse_matrix(quad_matrix: list[list[int]]) -> list[int]:
         # check not to go beyond x,y boundaries and not to visited cells
         next_x_pos = x + x_dir
         next_y_pos = y + y_dir
-        if (0 <= next_x_pos < size) and (0 <= next_y_pos < size) and (quad_matrix[next_y_pos][next_x_pos]):
+        if (0 <= next_x_pos < size) and (0 <= next_y_pos < size) and \
+                (quad_matrix[next_y_pos][next_x_pos]):
             x = next_x_pos
             y = next_y_pos
             result.append(quad_matrix[y][x])

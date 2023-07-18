@@ -1,8 +1,10 @@
-import pytest
 import asyncio
-from matrix_handler.snail_matrix import prepare_matrix, traverse_matrix, get_matrix
+from matrix_handler.snail_matrix import prepare_matrix, \
+    traverse_matrix, get_matrix
 
-SOURCE_URL = 'https://raw.githubusercontent.com/avito-tech/python-trainee-assignment/main/matrix.txt'
+SOURCE_URL = 'https://raw.githubusercontent.com/' \
+    'avito-tech/python-trainee-assignment/main/matrix.txt'
+
 TRAVERSAL = [
     10, 50, 90, 130,
     140, 150, 160, 120,
