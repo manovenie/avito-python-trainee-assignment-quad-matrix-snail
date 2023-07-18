@@ -6,6 +6,27 @@ async def get_text(url: str) -> str:
     pass
 
 
+def change_direction(x_dir, y_dir):
+    # from downside to right
+    if y_dir == 1:
+        y_dir = 0
+        x_dir = 1
+    # from right to upside
+    elif x_dir == 1:
+        x_dir = 0
+        y_dir = -1
+    # from upside to left
+    elif y_dir == -1:
+        y_dir = 0
+        x_dir = -1
+    # from left to downside
+    elif x_dir == -1:
+        x_dir = 0
+        y_dir = 1
+    return (x_dir, y_dir)
+
+
+
 def is_quadratic(matrix_list):
     first_row_len = len(matrix_list[0])
     row_count = 0
@@ -31,7 +52,7 @@ def prepare_matrix(text: str) -> list[list[int]]:
         elif len(row) and char == '\n':
             matrix_list.append(row)
             row = []
-    # check if matrix is not empty and it's quadratic
+    # check if matrix is not empty and if it's quadratic
     if matrix_list and is_quadratic(matrix_list):
         return matrix_list
     return []
@@ -54,22 +75,9 @@ def traverse_matrix(quad_matrix: list[list[int]]) -> list[int]:
             result.append(quad_matrix[y][x])
             quad_matrix[y][x] = None
             move_counter += 1
-        # from downside to right
-        elif y_dir == 1:
-            y_dir = 0
-            x_dir = 1
-        # from right to upside
-        elif x_dir == 1:
-            x_dir = 0
-            y_dir = -1
-        # from upside to left
-        elif y_dir == -1:
-            y_dir = 0
-            x_dir = -1
-        # from left to downside
-        elif x_dir == -1:
-            x_dir = 0
-            y_dir = 1
+        else:
+            x_dir, y_dir = change_direction(x_dir, y_dir)
+
     return result
 
 
