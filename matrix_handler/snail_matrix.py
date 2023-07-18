@@ -8,7 +8,7 @@ async def get_text_matrix(url: str) -> str:
             return await response.text()
 
 
-def change_direction(x_dir, y_dir):
+def change_direction(x_dir: int, y_dir: int) -> tuple[int, int]:
     # from downside to right
     if y_dir == 1:
         y_dir = 0
@@ -25,10 +25,10 @@ def change_direction(x_dir, y_dir):
     elif x_dir == -1:
         x_dir = 0
         y_dir = 1
-    return (x_dir, y_dir)
+    return x_dir, y_dir
 
 
-def is_quadratic(matrix_list):
+def is_quadratic(matrix_list: list[list[int]]) -> bool:
     matrix_len = len(matrix_list)
     for row in matrix_list:
         if len(row) != matrix_len:
@@ -41,9 +41,9 @@ def prepare_matrix(text: str) -> list[list[int]]:
     row = []
     str_num = ''
     for char in text:
-        if 48 <= ord(char) <= 57:
+        if char.isdigit():
             str_num = str_num + char
-        elif len(str_num) and char.isspace() and char != '\n':
+        elif len(str_num) and char != '\n':
             row.append(int(str_num))
             str_num = ''
         elif len(row) and char == '\n':
@@ -61,14 +61,16 @@ def traverse_matrix(quad_matrix: list[list[int]]) -> list[int]:
     y = -1     # -1 for lookup check in the 1st if in a while loop
     x_dir = 0  # -1 0 1
     y_dir = 1  # -1 0 1 (first move direction : downside)
-    size = len(quad_matrix[0])
+    size = len(quad_matrix)
     max_moves_count = size ** 2
     move_counter = 0
     while move_counter < max_moves_count:
         # check not to go beyond x,y boundaries and not to visited cells
-        if (0 <= x + x_dir < size) and (0 <= y + y_dir < size) and (quad_matrix[y+y_dir][x+x_dir] is not None):
-            x += x_dir
-            y += y_dir
+        next_x_pos = x + x_dir
+        next_y_pos = y + y_dir
+        if (0 <= next_x_pos < size) and (0 <= next_y_pos < size) and (quad_matrix[next_y_pos][next_x_pos] is not None):
+            x = next_x_pos
+            y = next_y_pos
             result.append(quad_matrix[y][x])
             quad_matrix[y][x] = None
             move_counter += 1
