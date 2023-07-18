@@ -2,8 +2,10 @@ import aiohttp
 import asyncio
 
 
-async def get_text(url: str) -> str:
-    pass
+async def get_text_matrix(url: str) -> str:
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            return await response.text()
 
 
 def change_direction(x_dir, y_dir):
@@ -26,7 +28,7 @@ def change_direction(x_dir, y_dir):
     return (x_dir, y_dir)
 
 
-
+# TO-DO: refactor
 def is_quadratic(matrix_list):
     first_row_len = len(matrix_list[0])
     row_count = 0
@@ -82,4 +84,6 @@ def traverse_matrix(quad_matrix: list[list[int]]) -> list[int]:
 
 
 async def get_matrix(url: str) -> list[int]:
-    pass
+    initial_matrix = prepare_matrix(await get_text_matrix(url))
+    result_list = traverse_matrix(initial_matrix)
+    return result_list
