@@ -1,6 +1,9 @@
 import asyncio
+import pytest
 from matrix_handler.snail_matrix import prepare_matrix, \
     traverse_matrix, get_matrix
+from matrix_handler.snail_matrix import EmptyMatrixError, NonQuadraticMatrixError
+
 
 SOURCE_URL = 'https://raw.githubusercontent.com/' \
     'avito-tech/python-trainee-assignment/main/matrix.txt'
@@ -21,15 +24,17 @@ PREPARED_MATRIX = [
 
 
 def test_prepare_matrix():
-    with open("fixtures/test_matrix_string.txt") as test_matrix:
+    with open("tests/fixtures/test_matrix_string.txt") as test_matrix:
         assert prepare_matrix(test_matrix.read()) == PREPARED_MATRIX
 
     # test for empty string instead of matrix
-    assert prepare_matrix("") == []
+    with pytest.raises(EmptyMatrixError):
+        prepare_matrix("")
 
     # test for non-quadratic matrix from file
-    with open("fixtures/test_non_quad_matrix.txt") as test_non_quad_matrix:
-        assert prepare_matrix(test_non_quad_matrix.read()) == []
+    with open("tests/fixtures/test_non_quad_matrix.txt") as non_quad_matrix:
+        with pytest.raises(NonQuadraticMatrixError):
+            prepare_matrix(non_quad_matrix.read())
 
 
 def test_traverse_matrix():

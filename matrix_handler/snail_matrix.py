@@ -2,6 +2,14 @@ import aiohttp
 import asyncio
 
 
+class NonQuadraticMatrixError(Exception):
+    pass
+
+
+class EmptyMatrixError(Exception):
+    pass
+
+
 async def get_text_matrix(url: str) -> str:
     try:
         async with aiohttp.ClientSession() as session:
@@ -59,9 +67,11 @@ def prepare_matrix(text: str) -> list[list[int]]:
             matrix_list.append(row)
             row = []
     # check if matrix is not empty and if it's quadratic
-    if matrix_list and is_quadratic(matrix_list):
-        return matrix_list
-    return []
+    if not matrix_list:
+        raise EmptyMatrixError("Matrix doesn't include integers")
+    elif not is_quadratic(matrix_list):
+        raise NonQuadraticMatrixError("Matrix is not quadratic")
+    return matrix_list
 
 
 def traverse_matrix(quad_matrix: list[list[int]]) -> list[int]:
