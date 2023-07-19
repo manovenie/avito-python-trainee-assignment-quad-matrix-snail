@@ -1,7 +1,7 @@
 import asyncio
 import pytest
 from matrix_handler.snail_matrix import prepare_matrix, \
-                traverse_matrix, convert_matrix_to_list
+                traverse_matrix, get_matrix
 from matrix_handler.snail_matrix import EmptyMatrixError, \
                                 NonQuadraticMatrixError
 
@@ -43,4 +43,4 @@ def test_traverse_matrix():
 
 
 def test_get_matrix():
-    assert asyncio.run(convert_matrix_to_list(SOURCE_URL)) == TRAVERSAL
+    assert asyncio.run(get_matrix(SOURCE_URL)) == TRAVERSAL

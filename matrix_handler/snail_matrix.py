@@ -100,7 +100,7 @@ def traverse_matrix(quad_matrix: list[list[int]]) -> list[int]:
     return result
 
 
-async def convert_matrix_to_list(url: str) -> list[int]:
+async def get_matrix(url: str) -> list[int]:
     initial_matrix = prepare_matrix(await get_text_matrix(url))
     result_list = traverse_matrix(initial_matrix)
     return result_list
